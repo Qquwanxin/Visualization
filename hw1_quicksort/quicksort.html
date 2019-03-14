@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>一个快速排序</head>
+<body>
+<script>
+function quickSort(arr)
+{
+  var n=arr.length;
+  if (n<2) return arr;
+  var left=0, right=n-1, mid;
+  while(left<right)
+  {
+    while(arr[right]>=arr[0] && left<right)--right;
+    while(arr[left]<=arr[0] && left<right)++left;
+    if (right==left)
+    {mid=arr[right];arr[right]=arr[0];arr[0]=mid;break;}
+
+    var temp=arr[right];
+    arr[right]=arr[left];
+    arr[left]=temp;
+  }
+  return quickSort(arr.slice(0,left)).concat(arr.slice(left,right+1)).concat(quickSort(arr.slice(right+1)));
+}
+var arr=[12,5,7,9,5,7,2,9,3,8,4,7,1,0];
+arr=quickSort(arr);
+console.log(arr);
+document.write("<br\>排序结果："+arr);
+</script>
+</body>
+</html>
