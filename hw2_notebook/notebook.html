@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <tltle>Note Book</tltle>
+        <style>
+            form {
+                margin: auto;
+                width: auto;
+                padding: 4em;
+                border: 1px solid #CCC;
+                border-radius: 1em;
+                background-color: lightyellow;
+            } 
+
+            form div + div{
+                margin-top: 1em;
+            }
+
+            textarea{
+                height: 200px;
+                border-style:solid;
+                box-sizing: border-box;
+            }
+            label{
+                margin:2em;
+                width:150px;
+                display:inline-block;
+                text-align: right;
+            }
+            .button1{
+                padding-left: 20px;
+                background-color:white;
+                border: 1px solid #CCC;
+                border-radius: 0.5em;
+                color: black;
+                padding: 5px 25px;
+                font-size: 16px;
+                margin: 4px 4px;
+                }
+            .button2{
+                padding-left: 20px;
+                background-color:white;
+                border: 1px solid #CCC;
+                border-radius: 0.5em;
+                color: black;
+                padding: 5px 40px;
+                font-size: 16px;
+                margin: 4px 4px;
+                }
+        </style>
+    </head>
+    <body>
+        <form>
+            <div>
+                <h1>My Notebook</h1>
+                <br/>
+                <h2>All notes</h2>
+            </div>
+            <div>
+                <p id="msg"></p>                    
+            </div>
+            <div>
+                <input type ="button" class="button1" value="全选" onclick = "ally('msg')"/>
+                <input type="button" id="btn_del" class="button1" value="删除(0)" onclick="deletechecked()">
+                     
+                </input>
+            </div>
+            <div>
+                <h2>Add a new note</h2>
+            </div>
+            <div class="input">
+                <label>Enter the note title:</label>
+                <input type="text" id ="nt"/>
+            </div>
+            <div>
+                <label></label>
+                <textarea id="memo" cols="60" rows="10"></textarea>
+                <br>
+                <label></label>
+                <input type="button" class="button2" value="save" onclick="saveStorage('nt','memo')" />
+                <input type="button" class="button2" value="初始化" onclick="clearStorage('msg')" />
+            </div>
+        </form>
+
+        <!--
+        *****************************
+        -->
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript"> 
+            function summ(){
+                var s=($("input[type='checkbox']:checked").length);
+                console.log();
+                var btnval=document.getElementById("btn_del");
+                btnval.value="删除("+s.toString()+")";
+                    
+            }
+
+            function saveStorage(id1,id2) {
+                //获取textarea的value值
+                var data = document.getElementById(id1).value;
+                var data2 = document.getElementById(id2).value;
+                //获取当前时间戳
+                var time = new Date().getTime();
+                //将时间戳作为键值，textarea的value值作为键值的内容保存在本地数据库
+                var dt=data+"--"+data2;
+                if(dt=="--"){
+                     console.log("Input Error!");
+                     window.alert("Error! Input can not be empty.");
+                }else{
+                   
+                    localStorage.setItem(time,dt);
+                    //保存成功后提示成功
+                    console.log("数据已保存");
+                    //设置loadStorage函数的传参（ID值）
+                    loadStorage('msg');
+                }
+            }
+
+            function loadStorage(id) {
+                var result = "";
+                //console.log(localStorage.length);
+                for(var i = 0; i < localStorage.length; i++) {
+                    //获取每一条新增的键值
+                    var kes = localStorage.key(i);
+                    
+                    //获取新增键值的内容
+                    var value = localStorage.getItem(kes);
+                    console.log("添加完成");
+                    result += '<input type = "checkbox" id="check'+ i.toString() +'"' + ' class="cb" onchange="summ()" >'+ value + '</input><br>';
+                }
+                var target = document.getElementById(id);
+                target.innerHTML = result;
+                summ();             
+            }
+
+            function ally(id){
+                var result = "";
+                //遍历本地数据所有内容
+                for(var i = 0; i < localStorage.length; i++) {
+                    //获取每一条新增的键值
+                    var kes = localStorage.key(i);
+                    
+                    //获取新增键值的内容
+                    var value = localStorage.getItem(kes);
+                    result += '<input type = "checkbox" id="check'+ i.toString() +'"' + ' class="cb" onchange="summ()" checked>'+ value + '</input><br>';
+                }
+                var target = document.getElementById(id);
+                target.innerHTML = result;
+                summ();
+            }
+
+            function clearStorage() {
+                //清除本地储存所有内容
+                localStorage.clear();
+                console.log("delete all");
+                loadStorage('msg');
+                summ();
+            }
+
+            function deletechecked(){
+                var nn=localStorage.length;
+                var k=0;
+                console.log(localStorage.length);
+                var arr = Array();
+                for(var i = 0; i <nn; i++) {
+                    var kes = localStorage.key(i);
+                    var ck_no="check"+i.toString();
+                    if(document.getElementById(ck_no).checked){
+                        //console.log("CKED",ck_no);
+                        arr[k++]=kes;
+                    }
+                }
+                for(var i =0;i<arr.length;++i){
+                    localStorage.removeItem(arr[i]);
+                }
+                loadStorage('msg');
+            }
+        </script>
+        <!--
+        ###################
+        -->
+
+    </body>
+</html>
