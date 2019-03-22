@@ -1,0 +1,32 @@
+html,body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+div{
+    position: relative;
+    left:0px;
+    top:0px;
+    border-style: box;
+    border:2px solid;
+    box-sizing:border-box;
+    margin: 0
+}
+.outer{
+    height:100%;
+}
+.A {
+    float:left;
+    width: 70%;
+    height: 80%;
+}
+.B {
+    float:left;
+    height: 80%;
+    width:30%;
+}
+.C{
+    float:left;
+    height: 20%;
+    width:100%;
+}

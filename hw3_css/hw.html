@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<!--
+			滑动按钮选择不同的css样式
+			上部两块 div 占比左：70%，右：30%
+			左上按钮滑动实现要求1/3的不同布局
+				- on: 上：80%，下 20%，
+				- off: 底部 div 为固定高度150px，顶部 div 撑满剩余空间
+			点击 button 实现换色，在 style1(即作业要求 1 布局)时点击左上 div 变为浅黄色， style2(即作业要求 3 布局)时点击左上 div 变为 浅蓝色。
+		-->
+		<meta charset="utf-8"> 
+		<title>CSS-exercise</title>
+		<script type="text/javascript" src="main.js"></script>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="main.css"/>
+		<link id = "cssfile" type="text/css" rel="stylesheet" href="style1.css"/>
+	</head>
+	<body>
+			
+		<div class="outer">
+		    <div class="A" id="a">
+				<input type="button" class="button" value="button" onclick="changethebackgroundcolor('a')"/>
+				<label class="switch-slide">
+						<input type="checkbox" id="check"  onchange="change()" hidden>
+						<label for="check" class="switch-slide-label"></label>
+				</label>
+		    </div>
+		    <div class="B"></div>
+		    <div class="C"></div>
+		</div>
+	</body>
+</html>
